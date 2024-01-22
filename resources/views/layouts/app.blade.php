@@ -22,15 +22,19 @@
 <body class="font-sans antialiased">
     <x-banner />
 
-    <div class="min-h-screen bg-gray-100">
+    <div class="min-h-screen bg-violet-50">
         <x-header />
+
         <main class="container mx-auto px-5 flex flex-grow">
             {{ $slot }}
 
         </main>
+
+
         <x-footer />
         @stack('modals')
         @livewireScripts
 </body>
 
 </html>
+
