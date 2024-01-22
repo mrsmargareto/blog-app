@@ -37,7 +37,6 @@
                 @auth
                     <div class="ms-3 relative">
                         <x-dropdown align="right" width="48">
-
                             <x-slot name="trigger">
                                 @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
                                     <button
@@ -121,51 +120,58 @@
 
 -->
         </div>
+
+
         @auth
             <x-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
-
-            <!-- Responsive Settings Options -->
-            <div class="pt-4 pb-1 border-t border-gray-200">
-                <div class="flex items-center px-4">
-                    @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
-                        <div class="shrink-0 me-3">
-                            <img class="h-10 w-10 rounded-full object-cover" src="{{ Auth::user()->profile_photo_url }}"
-                                alt="{{ Auth::user()->name }}" />
-                        </div>
-                    @endif
-                    <div>
-                        <div class="font-medium text-base text-gray-800">{{ Auth::user()->name }}</div>
-                        <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
-                    </div>
-                </div>
-
-                <div class="mt-3 space-y-1">
-
-                    <!-- Account Management -->
-
-                    @auth
-                        <x-responsive-nav-link href="{{ route('profile.show') }}" :active="request()->routeIs('profile.show')">
-                            {{ __('Profile') }}
-                        </x-responsive-nav-link>
-                        <x-responsive-nav-link href="{{ url('/terms') }}" :active="request()->is('terms')">Terms</x-responsive-nav-link>
-                        @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
-                            <x-responsive-nav-link href="{{ route('api-tokens.index') }}" :active="request()->routeIs('api-tokens.index')">
-                                {{ __('API Tokens') }}
-                            </x-responsive-nav-link>
-                        @endif
-                        <!-- Authentication -->
-                        <form method="POST" action="{{ route('logout') }}" x-data>
-                            @csrf
-
-                            <x-responsive-nav-link href="{{ route('logout') }}" @click.prevent="$root.submit();">
-                                {{ __('Log Out') }}
-                            </x-responsive-nav-link>
-                        </form>
-                    @endauth
-                </div>
-            </div>
         @endauth
+
+        <!-- Responsive Settings Options -->
+        <div class="pt-4 pb-1 border-t border-gray-200">
+ @auth
+            <div class="flex items-center px-4">
+
+
+                @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
+                    <div class="shrink-0 me-3">
+                        <img class="h-10 w-10 rounded-full object-cover" src="{{ Auth::user()->profile_photo_url }}"
+                            alt="{{ Auth::user()->name }}" />
+                    </div>
+                @endif
+                <div>
+                    <div class="font-medium text-base text-gray-800">{{ Auth::user()->name }}</div>
+                    <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
+                </div>
+@endauth
+            </div>
+
+            <div class="mt-3 space-y-1">
+
+                <!-- Account Management -->
+
+                @auth
+                    <x-responsive-nav-link href="{{ route('profile.show') }}" :active="request()->routeIs('profile.show')">
+                        {{ __('Profile') }}
+                    </x-responsive-nav-link>
+                    <x-responsive-nav-link href="{{ url('/terms') }}" :active="request()->is('terms')">Terms</x-responsive-nav-link>
+                    @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
+                        <x-responsive-nav-link href="{{ route('api-tokens.index') }}" :active="request()->routeIs('api-tokens.index')">
+                            {{ __('API Tokens') }}
+                        </x-responsive-nav-link>
+                    @endif
+                    <!-- Authentication -->
+                    <form method="POST" action="{{ route('logout') }}" x-data>
+                        @csrf
+
+                        <x-responsive-nav-link href="{{ route('logout') }}" @click.prevent="$root.submit();">
+                            {{ __('Log Out') }}
+                        </x-responsive-nav-link>
+                    </form>
+                @endauth
+            </div>
+        </div>
+
     </div>
 </nav>
