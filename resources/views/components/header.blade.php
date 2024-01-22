@@ -19,24 +19,27 @@
                             {{ __('Dashboard') }}
                         </x-nav-link>
                     @endauth
-
-
                     <x-nav-link href="{{ url('/') }}" :active="request()->is('/')">Home</x-nav-link>
                     <x-nav-link href="{{ url('/blog') }}" :active="request()->is('blog')">Blog</x-nav-link>
-                    <x-nav-link href="{{ url('/about') }}" :active="request()->is('about')">About Us</x-nav-link>
-                    <x-nav-link href="{{ url('/contact') }}" :active="request()->is('contact')">Contact Us</x-nav-link>
-                    <x-nav-link href="{{ url('/terms') }}" :active="request()->is('terms')">Terms</x-nav-link>
-                    <!-- Navigation Links-->
+                    <x-nav-link href="{{ url('/about') }}" :active="request()->is('about')">About Me</x-nav-link>
 
+                    <!-- <x-nav-link href="{{ url('/contact') }}" :active="request()->is('contact')">Contact Us</x-nav-link> -->
+                    <!-- <x-nav-link href="{{ url('/terms') }}" :active="request()->is('terms')">Terms</x-nav-link> -->
+
+                    <!-- Navigation Links-->
                 </div>
             </div>
 
             <div class="hidden sm:flex sm:items-center sm:ms-6">
-
                 <!-- Settings Dropdown -->
                 @auth
+
                     <div class="ms-3 relative">
                         <x-dropdown align="right" width="48">
+
+
+
+
                             <x-slot name="trigger">
                                 @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
                                     <button
@@ -89,6 +92,15 @@
                             </x-slot>
                         </x-dropdown>
                     </div>
+                @else
+                    <a href="{{ route('login') }}"
+                        class="font-semibold text-gray-600 hover:text-gray-900 focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Log
+                        in</a>
+
+                    @if (Route::has('register'))
+                        <a href="{{ route('register') }}"
+                            class="ml-4 font-semibold text-gray-600 hover:text-gray-900 focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Register</a>
+                    @endif
                 @endauth
             </div>
 
@@ -111,14 +123,25 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{ 'block': open, 'hidden': !open }" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
-            <!--
-                <x-responsive-nav-link href="{{ url('/') }}" :active="request()->is('/')">Home</x-responsive-nav-link>
-                <x-responsive-nav-link href="{{ url('/blog') }}" :active="request()->is('blog')">Blog</x-responsive-nav-link>
-                <x-responsive-nav-link href="{{ url('/about') }}" :active="request()->is('about')">About Us</x-responsive-nav-link>
-                <x-responsive-nav-link href="{{ url('/contact') }}" :active="request()->is('contact')">Contact
-                    Us</x-responsive-nav-link>
 
--->
+            <x-responsive-nav-link href="{{ url('/') }}" :active="request()->is('/')">Home</x-responsive-nav-link>
+            <x-responsive-nav-link href="{{ url('/blog') }}" :active="request()->is('blog')">Blog</x-responsive-nav-link>
+            <x-responsive-nav-link href="{{ url('/about') }}" :active="request()->is('about')">About Me</x-responsive-nav-link>
+            <!-- <x-responsive-nav-link href="{{ url('/contact') }}" :active="request()->is('contact')">Contact Us</x-responsive-nav-link> -->
+            @if (Route::has('login'))
+                @auth
+                @else
+                    <x-responsive-nav-link href="{{ url('/login') }}" :active="request()->is('login')">Login</x-responsive-nav-link>
+
+                    @if (Route::has('register'))
+                        <x-responsive-nav-link href="{{ url('/register') }}"
+                            :active="request()->is('register')">Register</x-responsive-nav-link>
+                    @endif
+
+                @endauth
+
+            @endif
+
         </div>
 
 
@@ -129,29 +152,30 @@
         @endauth
 
         <!-- Responsive Settings Options -->
-        <div class="pt-4 pb-1 border-t border-gray-200">
- @auth
-            <div class="flex items-center px-4">
+        @auth
+            <div class="pt-4 pb-1 border-t border-gray-200">
+
+                <div class="flex items-center px-4">
 
 
-                @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
-                    <div class="shrink-0 me-3">
-                        <img class="h-10 w-10 rounded-full object-cover" src="{{ Auth::user()->profile_photo_url }}"
-                            alt="{{ Auth::user()->name }}" />
+                    @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
+                        <div class="shrink-0 me-3">
+                            <img class="h-10 w-10 rounded-full object-cover" src="{{ Auth::user()->profile_photo_url }}"
+                                alt="{{ Auth::user()->name }}" />
+                        </div>
+                    @endif
+                    <div>
+                        <div class="font-medium text-base text-gray-800">{{ Auth::user()->name }}</div>
+                        <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
                     </div>
-                @endif
-                <div>
-                    <div class="font-medium text-base text-gray-800">{{ Auth::user()->name }}</div>
-                    <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
+
                 </div>
-@endauth
-            </div>
+            @endauth
 
-            <div class="mt-3 space-y-1">
+            @auth
+                <div class="mt-3 space-y-1">
+                    <!-- Account Management -->
 
-                <!-- Account Management -->
-
-                @auth
                     <x-responsive-nav-link href="{{ route('profile.show') }}" :active="request()->routeIs('profile.show')">
                         {{ __('Profile') }}
                     </x-responsive-nav-link>
@@ -169,8 +193,9 @@
                             {{ __('Log Out') }}
                         </x-responsive-nav-link>
                     </form>
-                @endauth
-            </div>
+
+                </div>
+            @endauth
         </div>
 
     </div>
