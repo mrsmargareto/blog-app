@@ -19,29 +19,16 @@
     @livewireStyles
 </head>
 
-<body class="font-sans antialiased">
+<body class="font-sans antialiased bg-violet-50">
     <x-banner />
     <x-header />
-    <!-- if statment for login -->
-    <div
-        class="relative sm:flex sm:justify-center sm:items-center min-h-screen  bg-center bg-violet-50 selection:bg-red-500 selection:text-white">
-
-        @if (Route::has('login'))
-            <div class="sm:fixed sm:top-0 sm:right-0 p-6 text-right z-10">
-
-            </div>
-        @endif
+    <main class="container mx-auto px-5 flex flex-grow">
 
 
-
-
-    </div>
-
-    <!-- if statment for login -->
-
+    </main>
+    <x-footer />
+    @stack('modals')
     @livewireScripts
-
-
 </body>
 
 </html>
