@@ -22,10 +22,11 @@
 <body class="font-sans antialiased">
     <x-banner />
 
-    <div class="min-h-screen bg-violet-50">
+    <div class="min-h-screen bg-violet-100">
         <x-header />
 
         <main class="container mx-auto px-5 flex flex-grow">
+
             {{ $slot }}
 
         </main>
